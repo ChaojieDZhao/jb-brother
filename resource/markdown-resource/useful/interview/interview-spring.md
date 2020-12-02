@@ -1,5 +1,5 @@
 
-## bean_life_cycle
+## bean-life-cycle
 
 - 实例化一个Bean－－也就是我们常说的new；
 - 按照Spring上下文对实例化的Bean进行配置－－也就是IOC注入；
