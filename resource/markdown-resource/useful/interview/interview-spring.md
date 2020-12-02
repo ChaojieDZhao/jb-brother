@@ -1,8 +1,8 @@
-# Table of Contents
+# 目录
 
-* 1 [bean的生命周期](#bean的生命周期)
-  * 1.1 [变更日志](#变更日志)
-  * 1.2 [Features](#features)
+* [bean的生命周期](#bean的生命周期)
+  * [变更日志](#变更日志)
+  * [Features](#features)
 
 
 ## bean的生命周期
