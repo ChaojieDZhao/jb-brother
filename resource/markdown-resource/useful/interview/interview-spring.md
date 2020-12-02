@@ -1,5 +1,11 @@
+# Table of Contents
 
-## bean-life-cycle
+* 1 [bean的生命周期](#bean的生命周期)
+  * 1.1 [变更日志](#变更日志)
+  * 1.2 [Features](#features)
+
+
+## bean的生命周期
 
 - 实例化一个Bean－－也就是我们常说的new；
 - 按照Spring上下文对实例化的Bean进行配置－－也就是IOC注入；
