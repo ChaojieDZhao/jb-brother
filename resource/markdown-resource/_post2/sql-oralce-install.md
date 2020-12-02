@@ -1,0 +1,191 @@
+---
+title: oracle安装记录
+date: 2018-03-31 07:53:37
+tags:
+- oracle
+---
+## 安装依赖包
+``` cmd
+yum -y install binutils compat-libstdc++-33 elfutils-libelf elfutils-libelf-devel glibc glibc-common glibc-devel gcc gcc-c++ libaio-devel libaio libgcc libstdc++ libstdc++-devel make sysstat unixODBC unixODBC-devel pdksh ksh libaio.i686 glibc.i686 compat-libstdc++-33.i686 libaio-devel.i686 libgcc.i686 libstdc++.i686 unixODBC.i686 unixODBC-devel.i686
+```
+
+## 安装工具
+``` cmd
+yum -y install wget unzip net-tools 
+wget http://public-yum.oracle.com/public-yum-ol7.repo -O /etc/yum.repos.d/public-yum-ol7.repo
+wget http://public-yum.oracle.com/RPM-GPG-KEY-oracle-ol7 -O /etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+```
+
+## 配置环境
+### 配置环境方法一（使用插件）
+``` cmd
+yum -y install oracle-rdbms-server-11gR2-preinstall 
+```
+
+### 配置环境方法二
+#### 配置用户相关
+``` cmd
+groupadd oinstall 
+groupadd dba 
+useradd -g oinstall -G dba oracle 
+passwd oracle
+密码：123456
+```
+
+#### 添加oracle安全限制
+> vi /etc/security/limits.conf 末尾添加
+
+```
+oracle  soft    nproc  2047 
+oracle  hard    nproc  16384 
+oracle  soft    nofile  1024 
+oracle  hard    nofile  65536 
+oracle  soft    stack  10240
+```
+    
+#### 修改内核变量配置文件
+> vi /etc/sysctl.conf 添加
+
+``` json
+fs.aio-max-nr = 1048576 
+fs.file-max = 6815744 
+kernel.shmall = 2097152 
+kernel.shmmax = 1610612736 #共享内存字节数(一般75%物理内存，此变量要根据实际情款修改)  1.5G
+kernel.shmmni = 4096 
+kernel.sem = 250 32000 100 128 
+net.ipv4.ip_local_port_range = 9000 65500 
+net.core.rmem_default = 262144 
+net.core.rmem_max = 4194304 
+net.core.wmem_default = 262144 
+net.core.wmem_max = 1048586 
+查看添加是够成功：sysctl -p
+```
+
+## 配置环境变量
+> vim .bash_profile 
+
+``` json
+export ORACLE_BASE=/usr/local/u01/oracle
+export ORACLE_HOME=/usr/local/u01/oracle/product/11.2.0/dbhome_1
+export ORACLE_SID=shibdz 
+export NLS_LANG="american_america.ZHS16GBK"
+export NLS_DATE_FORMAT="YYYY-MM-DD HH24:Mi:SS"
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib
+export PATH=$ORACLE_HOME/bin:$PATH 
+PATH=$PATH:$HOME/bin
+export PATH 
+```
+## 创建文件夹 赋予权限
+``` cmd
+su root
+mkdir -p /usr/local/u01/oracle && chown -R oracle:oinstall /usr/local/u01/oracle
+mkdir -p /usr/local/u01/oraInventory && chown -R oracle:oinstall /usr/local/u01/oraInventory
+```
+
+## 解压文件并且赋予权限
+``` cmd
+unzip linux.x64_11gR2_database_1of2.zip && unzip linux.x64_11gR2_database_2of2.zip 
+chown -R oracle:oinstall /home/oracle/database
+```
+
+## 配置db_install.rsp
+> cp -r /home/oracle/database/response /home/oracle/rsp 备份
+
+``` json
+#我的/home/oracle/rsp/db_install.rsp
+oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v11_2_0
+#INSTALL_DB_AND_CONFIG安装并自动配置数据库实例和监听 建议首次安装用这个
+#不然配置另外两个文件，新建实例和监听
+oracle.install.option=INSTALL_DB_AND_CONFIG
+ORACLE_HOSTNAME=localhost
+UNIX_GROUP_NAME=oinstall
+INVENTORY_LOCATION=/usr/local/u01/oraInventory
+SELECTED_LANGUAGES=zh_CN,en
+ORACLE_HOME=/usr/local/u01/oracle/product/11.2.0/dbhome_1
+ORACLE_BASE=/usr/local/u01/oracle
+oracle.install.db.InstallEdition=EE
+oracle.install.db.isCustomInstall=true
+oracle.install.db.customComponents=oracle.server:11.2.0.1.0,oracle.sysman.ccr:10.2.7.0.0,oracle.xdk:11.2.0.1.0,oracle.rdbms.oci:11.2.0.1.0,oracle.network:11.2.0.1.0,oracle.network.listener:11.2.0.1.0,oracle.rdbms:11.2.0.1.0,oracle.options:11.2.0.1.0,oracle.rdbms.partitioning:11.2.0.1.0,oracle.oraolap:11.2.0.1.0,oracle.rdbms.dm:11.2.0.1.0,oracle.rdbms.dv:11.2.0.1.0,orcle.rdbms.lbac:11.2.0.1.0,oracle.rdbms.rat:11.2.0.1.0
+oracle.install.db.DBA_GROUP=dba
+oracle.install.db.OPER_GROUP=oinstall
+oracle.install.db.config.starterdb.type=GENERAL_PURPOSE
+#这个是服务名
+oracle.install.db.config.starterdb.globalDBName=shibdz_ypt
+#实例sid
+oracle.install.db.config.starterdb.SID=shibdz
+oracle.install.db.config.starterdb.characterSet=AL32UTF8
+oracle.install.db.config.starterdb.memoryOption=true
+oracle.install.db.config.starterdb.memoryLimit=1024
+#是否安装学习的scott和hr(我就知道这两个)
+oracle.install.db.config.starterdb.installExampleSchemas=true
+oracle.install.db.config.starterdb.enableSecuritySettings=true
+#密码全设置成123456 (安装时会提示，个人学习忽略)
+oracle.install.db.config.starterdb.password.ALL=123456
+oracle.install.db.config.starterdb.control=DB_CONTROL
+oracle.install.db.config.starterdb.dbcontrol.enableEmailNotification=false
+oracle.install.db.config.starterdb.automatedBackup.enable=false
+oracle.install.db.config.starterdb.storageType=FILE_SYSTEM_STORAGE
+oracle.install.db.config.starterdb.fileSystemStorage.dataLocation=/usr/local/u01/oracle/oradata
+#true
+DECLINE_SECURITY_UPDATES=true
+```
+
+## 安装
+``` cmd
+/home/oracle/database/runInstaller -silent -ignorePrereq  -responseFile /home/oracle/rsp/db_install.rsp
+```
+
+### 解决 INS-35173
+> 修改/etc/fstab  添加如下一行
+
+```
+tmpfs            /dev/shm       tmpfs  defaults,size=3G       0 0 
+```
+
+### 常用命令
+``` cmd
+dbstart $ORACLE_HOME
+dbshut  $ORACLE_HOME
+lsnrctl stop、lsnrctl start、lsnrctl status
+连接数据库：sqlplus / as sysdba 
+shutdown immediate
+startup
+```
+### 监听服务配置文件展示
+
+``` cmd
+# tnsnames.ora Network Configuration File: /usr/local/u01/oracle/product/11.2.0/dbhome_1/network/admin/tnsnames.ora
+# Generated by Oracle configuration tools.
+
+SHIBDZ_YPT =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 10.9.4.192)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = shibdz_ypt)
+    )
+  )
+
+
+# listener.ora Network Configuration File: /usr/local/u01/oracle/product/11.2.0/dbhome_1/network/admin/listener.ora
+# Generated by Oracle configuration tools.
+SID_LIST_LISTENER =
+  (SID_LIST =
+    (SID_DESC =
+      (GLOBAL_DBNAME = shibdz_ypt)
+      (ORACLE_HOME = /usr/local/u01/oracle/product/11.2.0/dbhome_1)
+	  (SID_NAME = shibdz)
+    )
+  )
+
+LISTENER =
+  (DESCRIPTION_LIST =
+    (DESCRIPTION =
+      (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC1521))
+      (ADDRESS = (PROTOCOL = TCP)(HOST = 10.9.4.192)(PORT = 1521))
+    )
+  )
+
+ADR_BASE_LISTENER = /usr/local/u01/oracle
+```
+

@@ -1,0 +1,1 @@
+scp elk@200.200.6.20:/home/elk/elasticsearch-6.5.3/config/elasticsearch.yml elasticsearch.yml    #拉取文件

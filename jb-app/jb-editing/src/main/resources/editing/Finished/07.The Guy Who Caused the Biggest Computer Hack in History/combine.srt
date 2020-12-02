@@ -1,0 +1,444 @@
+1
+00:00:00,149 --> 00:00:03,882
+在这个时代，我们所有人都非常依赖互联网。
+In this day and age, we've all become pretty much dependent on the internet.
+
+2
+00:00:03,882 --> 00:00:08,182
+我们通过互联网使用APP与朋友和家人聊天，导航去处，网上购物，
+We use it to connect with friends and family, to figure out where we're going, to purchase
+
+3
+00:00:08,182 --> 00:00:12,382
+更有甚者依赖它进行工作和就学。
+things, and some of us are even dependent on it to get to work and school with apps.
+
+4
+00:00:12,382 --> 00:00:13,682
+例如Uber和Lyft。
+like Uber and Lyft.
+
+5
+00:00:13,882 --> 00:00:18,649
+但是，如果整个互联网突然关闭的话会发生什么？
+But what would happen if the entire internet suddenly shut down?
+
+6
+00:00:18,649 --> 00:00:21,082
+长话短说，产生混乱！
+Long story short - It would be chaos!
+
+7
+00:00:21,082 --> 00:00:25,515
+股市将会关闭，我们将无法访问银行或使用银行卡付款，
+The stock market would shut down, we wouldn't be able to access our banks or pay with our
+
+8
+00:00:25,515 --> 00:00:30,349
+GPS导航系统将停止工作，并且你也无法观看任何优秀的B站视频
+cards, GPS would stop working, and you wouldn't be able to watch any great YouTube videos
+
+9
+00:00:30,549 --> 00:00:31,982
+就像这个。
+like this one.
+
+10
+00:00:31,982 --> 00:00:36,082
+幸运的是，在偶发性WiFi中断的情况，我们大多数人都不必拥有
+Thankfully, outside of the occasional Wi-Fi outage, most of us haven't had to experience
+
+11
+00:00:36,082 --> 00:00:37,349
+如此的经历。
+anything like this.
+
+12
+00:00:37,349 --> 00:00:41,949
+但是，由于某一个人的无意所为，一整个国家曾经体验过
+However, thanks to the accidental handiwork of just one man, an entire country once went
+
+13
+00:00:42,149 --> 00:00:45,249
+上述水平的灾难状况。
+through that exact disaster-level situation.
+
+14
+00:00:45,249 --> 00:00:46,449
+那这个男人是谁？
+So who was this man?
+
+15
+00:00:46,449 --> 00:00:50,015
+他是如何切断整个国家的互联网连接的？
+How did he knock out an entire country's internet connection?
+
+16
+00:00:50,015 --> 00:00:51,849
+造成的结果是什么？
+And what happened as a result?
+
+17
+00:00:51,849 --> 00:00:53,649
+让我们来深入了解一下。
+Let's dive right in to find out.
+
+18
+00:00:53,849 --> 00:00:58,415
+早在2016年11月，利比里亚的手机和互联网提供商Cellcom的一名员工向
+Back in November of 2016, a man named Daniel Kaye was approached by an employee of the
+
+19
+00:00:58,415 --> 00:01:03,615
+一位名叫丹尼尔凯伊（Daniel Kaye）的男子提出了一个很有吸引力的提议。
+Liberian cell phone and internet provider Cellcom with a very interesting offer.
+
+20
+00:01:03,615 --> 00:01:09,115
+每月付10,000美元让凯伊尽可能地对Cellcom的主要竞争对手Lonestar的服务和
+$10,000 a month for Kaye to do as much damage as humanly possible to Cellcom's main rival,
+
+21
+00:01:09,115 --> 00:01:11,249
+声誉造成损害。
+Lonestar's, service and reputation.
+
+22
+00:01:11,249 --> 00:01:14,615
+那么，为什么丹尼尔凯伊会得到如此庞大的工作呢？
+So why would Daniel Kaye be approached for such a huge job?
+
+23
+00:01:14,615 --> 00:01:19,649
+凯伊，一个28岁的英国人，来自埃格姆（Egham, ）市，是一个完全
+Well, Kaye, a then 28-year-old British man originally from the city of Egham, was a completely
+
+24
+00:01:19,649 --> 00:01:23,482
+自学成才的黑客，并开始提供非法的黑客入侵服务。
+self-taught hacker who had begun offering illicit hacking services.
+
+25
+00:01:23,682 --> 00:01:27,715
+这位Cellcom的员工可能希望从他们的最大竞争对手那里争取尽可能多的客户，
+The Cellcom employee, likely hoping to take as many customers from their large rival as
+
+26
+00:01:27,715 --> 00:01:30,982
+于是通过风谲云诡的暗网寻求凯伊的帮助。
+possible, sought out Kaye's help through the elusive dark web.
+
+27
+00:01:30,982 --> 00:01:34,282
+在接下来的几周中，丹尼尔凯伊开始规划他的黑客活动。
+Over the next few weeks, Daniel Kaye began planning his hack.
+
+28
+00:01:34,282 --> 00:01:39,149
+他决定使用一种久经考验的入侵方法，这种方法已经在数千次攻击中
+He decided he would use a tried and true hacking method that had been used for decades
+
+29
+00:01:39,149 --> 00:01:40,649
+使用了数十年：DDOS。
+in thousands of attacks: DDOS.
+
+30
+00:01:40,849 --> 00:01:44,215
+DDOS代表分布式拒绝服务。
+DDOS standing for Distributed Denial of Service.
+
+31
+00:01:44,215 --> 00:01:48,349
+基本上就是黑客同时发送大量的客户端请求访问服务器，
+Basically, it means that a hacker sends so many requests to enter a server at once, that
+
+32
+00:01:48,349 --> 00:01:50,415
+以至于服务器无法处理并崩溃。
+the server can't handle them all and crashes.
+
+33
+00:01:50,415 --> 00:01:54,782
+当一家公司发布全新的限量版商品，
+The same type of this can accidentally happen when a company releases brand new, limited
+
+34
+00:01:54,782 --> 00:01:59,582
+或者备受追捧的音乐会开始售票，数百万人试图同时登录一个网站时，
+edition merchandise, or when highly sought-after concert tickets go on sale and millions of
+
+35
+00:01:59,582 --> 00:02:01,515
+此类情况可能会发生。
+people try to log onto a site at once.
+
+36
+00:02:01,715 --> 00:02:06,049
+为了发动这次对利比里亚通讯商Lonestar的袭击，凯伊有一个
+In order to launch this attack on Lonestar in Liberia, Kaye had an elaborate plan in
+
+37
+00:02:06,049 --> 00:02:07,382
+周密的计划。
+mind.
+
+38
+00:02:07,382 --> 00:02:11,782
+具有讽刺意味的是，他发现一个安全摄像头品牌
+He had found a brand security cameras, ironically enough, themselves
+
+39
+00:02:11,782 --> 00:02:13,582
+本身就存在一个可以利用的安全弱点。
+had a security weakness that could be exploited.
+
+40
+00:02:13,582 --> 00:02:19,282
+使用一串称为“ Mirai＃14”的代码和命令。基本上是一些黑客手段中的
+Using a string of code and commands known as "Mirai #14"， basically some hacking mumbo
+
+41
+00:02:19,282 --> 00:02:24,949
+巨无霸，凯伊接管了网络摄像头，并于2016年11月3日启动所有摄像头
+jumbo, Kaye took control of the web-connected cameras, and on November 3rd, 2016,
+
+42
+00:02:24,949 --> 00:02:28,615
+同时尝试访问Lonestar的服务器。
+sent themall to simultaneously try and access Lonestar's servers.
+
+43
+00:02:28,615 --> 00:02:32,215
+现在，你应该了解下利比里亚当时的互联网
+Now, there's something you should know about the internet connection in Liberia at the
+
+44
+00:02:32,215 --> 00:02:33,215
+连接情况。
+time.
+
+45
+00:02:33,215 --> 00:02:36,849
+当时互联网和手机服务提供商的数量非常有限，
+There were a very limited number of internet and cell phone service providers back then,
+
+46
+00:02:36,849 --> 00:02:40,682
+所以该国的大部分流量都是通过Lonestar或Cellcom提供的网络进行的，
+so most of the traffic in the country went through either Lonestar or Cellcom networks,
+
+47
+00:02:40,682 --> 00:02:45,149
+并且大西洋电缆的连接非常有限，这意味着向Lonestar发动的攻击
+and alongside having a very limited Atlantic Cable connection, this meant that an attack
+
+48
+00:02:45,149 --> 00:02:49,282
+可能会使所有通过利比里亚的互联网请求
+on Lonestar could mean that all the requests for internet moving through Liberia wouldn't
+
+49
+00:02:49,282 --> 00:02:50,749
+都无法完成。
+have any way to be completed.
+
+50
+00:02:50,749 --> 00:02:55,315
+摄像机一经触发就使Lonestar的网络不堪重负，变得
+As soon as the cameras started being used to overwhelm the Lonestar network, it
+
+51
+00:02:55,315 --> 00:02:58,882
+不稳定，在某些地方甚至直接停止服务。
+began to struggle, and in some places even shut down.
+
+52
+00:02:59,082 --> 00:03:04,082
+但是凯伊认为自己没有足够的火力，因此，他还试图利用德国电信（deutsche telekom）
+However Kaye didn't think he had enough firepower, so he attempted to also create some
+
+53
+00:03:04,082 --> 00:03:08,282
+在德国国家基站基础设施的另一个安全漏洞，
+more DDoS bots by exploiting another security flaw in the national infrastructure
+
+54
+00:03:08,282 --> 00:03:10,582
+制造更多的DDoS进攻节点。
+of cell towers in Germany, set up by Deutsche Telekom.
+
+55
+00:03:10,582 --> 00:03:15,549
+此时，Lonestar邀请了网络安全专家，但是为时已晚。
+At this point, Lonestar called in cyber security experts, but it was too late.
+
+56
+00:03:15,549 --> 00:03:17,982
+侵入已经失控了。
+The hack had already gotten out of control.
+
+57
+00:03:17,982 --> 00:03:22,982
+由于利比里亚互联网流量的很大一部分依赖于Lonestar建立的基础设施，
+Due to the fact that a large portion of Liberia's internet traffic was dependent on infrastructure
+
+58
+00:03:22,982 --> 00:03:27,782
+在接下来Lonestar受到攻击的两天里，
+set up by Lonestar, for the next two days, while Lonestar was under attack, internet
+
+59
+00:03:27,782 --> 00:03:32,082
+全国的互联网用户发现他们无法打电话，
+users across the country found that they were unable to make phone calls or even access
+
+60
+00:03:32,282 --> 00:03:33,282
+甚至无法上网。
+the internet.
+
+61
+00:03:33,282 --> 00:03:38,849
+丹尼尔凯伊无意地切断了整个国家的互联网连接。
+Without even meaning to, Daniel Kaye had knocked out an entire country's internet
+
+62
+00:03:38,849 --> 00:03:43,315
+这是历史上第一次有人这样做，这完全就是
+connection. This was the first time anyone had managed to do this in history, and it
+
+63
+00:03:43,315 --> 00:03:44,449
+意外造成的。
+was entirely by accident.
+
+64
+00:03:44,449 --> 00:03:49,882
+2017年2月，经过调查，凯伊因涉嫌实施重大黑客攻击
+In February of 2017, following an investigation, Kaye was arrested under suspicion of having
+
+65
+00:03:49,882 --> 00:03:51,515
+而被捕。
+committed the major hack.
+
+66
+00:03:51,715 --> 00:03:55,549
+在被捕后，凯伊也被引渡到德国面临指控，
+Following his arrest, Kaye was extradited to Germany to face charges there as well,
+
+67
+00:03:55,549 --> 00:03:59,949
+因为在试图利用德国电信网络资源的过程中，他还成功地
+as during his attempt to use resources from the Deutsche Telekom network he had also
+
+68
+00:03:59,949 --> 00:04:05,182
+切断了该公司逾12.4万名客户的互联网连接。
+succeeded in knocking out the internet connection of more than 124,000 of their customers.
+
+69
+00:04:05,182 --> 00:04:08,582
+在那里，他也承认了这些指控，尽管这些指控远没有他回到英国后
+There too, he pled guilty to the charges, although they were far less severe than the
+
+70
+00:04:08,582 --> 00:04:10,782
+所面临的严重。
+ones he faced when he returned to the UK.
+
+71
+00:04:10,982 --> 00:04:14,982
+一经德国将凯伊送回英国，根据1990年英国制定的计算机滥用法案，他承认了犯罪行为，
+Once Germany sent Kaye back to his homeland, he pled guilty to crimes under the Computer
+
+72
+00:04:14,982 --> 00:04:20,515
+并承认拥有犯罪财产，即他为完成这一切而
+Misuse Act of 1990 under UK law, as well as possession of criminal property, namely the
+
+73
+00:04:20,515 --> 00:04:23,749
+已经收到的10000美元。
+10,000 dollars he had received in order to do all of this.
+
+74
+00:04:23,749 --> 00:04:27,349
+在调查过程中，人们发现，在攻击最严重的时候，凯伊在全世界
+During the investigation, it was discovered that at the peak of the hack, Kaye had been
+
+75
+00:04:27,349 --> 00:04:32,749
+控制了100多万台设备，这一切都发生在他一直居住的
+in control of over 1 million devices worldwide, all from the comfort of a vacation home in
+
+76
+00:04:32,749 --> 00:04:34,482
+塞浦路斯（Cyprus ）度假别墅里。
+Cyprus he had been staying at.
+
+77
+00:04:34,482 --> 00:04:39,715
+凯伊的黑客攻击对Lonestar和整个利比里亚的影响之深远令人难以置信。
+The effects of Kaye's hack on Lonestar, and Liberia as a whole, were incredibly far reaching.
+
+78
+00:04:39,715 --> 00:04:44,215
+他这样做让所有Lonestar的客户，实际上就是整个利比里亚的大多数人，
+He had made it so that all of Lonestar's customers, and really most people across Liberia,
+
+79
+00:04:44,215 --> 00:04:48,715
+完全失去沟通或获取基本服务。
+were totally unable to communicate with each other or access basic services.
+
+80
+00:04:48,715 --> 00:04:52,349
+由于遭到骇客入侵，这些客户中有相当一部分转而投向Lonestar的
+As a result of the hack, a substantial number of these customers switched to Lonestar's
+
+81
+00:04:52,549 --> 00:04:57,215
+竞争者，其中就包括Cellcom，最终竟还是达到了目的。
+competitors, including Cellcom, who at the end of the day, still got what they wanted.
+
+82
+00:04:57,215 --> 00:05:01,715
+丹尼尔·凯伊被判入狱32个月，这对于他给利比里亚国家造成的难以置信的破坏
+Daniel Kaye was sentenced to serve 32 months in jail, a small price to pay for the incredible
+
+83
+00:05:01,715 --> 00:05:03,815
+来说算是很小的代价。
+damage he caused to the nation of Liberia.
+
+84
+00:05:04,015 --> 00:05:08,549
+事实上，凯伊甚至可能从他的被捕中获得了一些好处，因为他的律师曾表示，
+In fact, Kaye may have even gained some benefits from his arrest, as his lawyer has stated
+
+85
+00:05:08,549 --> 00:05:12,482
+自侵入发生以来，几家主要的科技公司已经与凯伊取得了联系，希望招募他来
+that since the attack, several major tech companies have reached out to Kaye, wanting
+
+86
+00:05:12,482 --> 00:05:15,615
+使用自己的能力来造福而不是作恶。
+to recruit him to use his powers for good instead of evil.
+
+87
+00:05:15,615 --> 00:05:19,182
+那么，如果你的国家的互联网突然中断，你会怎么办？
+So what would you do if the internet suddenly went out in your entire country?
+
+88
+00:05:19,182 --> 00:05:21,115
+写在下方评论让我们知道吧。
+Let us know down in the comments.
+
+89
+00:05:21,115 --> 00:05:26,115
+感谢收看！
+Thanks for watching!

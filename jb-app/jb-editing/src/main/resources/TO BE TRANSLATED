@@ -1,0 +1,149 @@
+In this tutorial, we will talk about how different Java Garbage Collectors work and what you can expect from them. This will give us the necessary background to start tuning the garbage collection algorithm of your choice.
+
+Before going into Java Garbage Collection tuning we need to understand two things. First of all, how garbage collection works in theory and how it works in the system we are going to tune. Our system’s garbage collector work is described by garbage collector logs and metrics from observability tools like Sematext Cloud for JVM. We talked about how to read and understand Java Garbage Collection logs in a previous blog post.
+
+What is Garbage Collection in Java: A Definition
+Java Garbage Collection is an automatic process during which the Java Virtual Machine inspects the object on the heap, checks if they are still referenced and releases the memory used by those objects that are no longer needed.
+
+Object Eligibility: When Does Java Perform Garbage Collection
+Let’s take a quick look on when the object is ready to be collected by the garbage collection and how to actually request the Java Virtual Machine to start garbage collection.
+
+How to Make an Object Eligible for GC?
+To put it straight – you don’t have to do anything explicitly to make an object eligible for garbage collection. When an object is no longer used in your application code, the heap space used by it can be reclaimed. Look at the following Java code:
+
+public Integer run() {
+  Integer variableOne = 10;
+  Integer variableTwo = 20;
+  return variableOne + variableTwo;
+}
+In the run() method we explicitly create two variables. They are first put on the heap, in the young generation heap. Once the method finishes its execution they are no longer needed and they start being eligible for garbage collection. When a young generation garbage collection happens the memory used by those variables may be reclaimed. If that happens the previously occupied memory will be visible as free.
+
+How to Request the JVM to Run GC?
+The best thing regarding Java garbage collection is that it is automatic. Until the time comes, and you want and need to control and tune it, you don’t have to do anything. When the Java Virtual Machine will decide it’s time to start reclaiming the space on the heap and throwing away unused objects it will just start the garbage collection process.
+
+If you want to force garbage collection you can use the System object from the java.lang package and its gc() method or the Runtime.getRuntime().gc() call. As the documentation states – Java Virtual Machine will do its best efforts to reclaim the space. This means that the garbage collection may actually not happen, this depends on the JVM. If the garbage collection happens it will be a Major collection which means that we can expect a stop-the-world event to happen. In general, using the System.gc() is considered a bad practice and we should tune the work of the garbage collector instead of calling it explicitly.
+
+How Does Java Garbage Collection Work?
+No matter what implementation of the garbage collector we use, to clean up the memory, a short pause needs to happen. Those pauses are also called stop-the-world events or STW in short. You can envision your JVM-based application’s working cycles in the following way:
+
+Application Working Cycle
+
+The first step of the cycle starts when your application threads are started and your business code is working. This is where your application code is running. At a certain point in time, an event happens that triggers garbage collection. To clear the memory, application threads have to be stopped. This is where the work of your application stops and the next steps start. The garbage collector marks objects that are no longer used and reclaims the memory. Finally, an optional step of heap resizing may happen if possible. Then the circle starts again, application threads are started. The full cycle of the garbage collection is called the epoch.
+
+The key when running JVM applications and tuning the garbage collector is to keep the application threads running for as long as possible. That means that the pauses caused by the garbage collector should be minimal.
+
+Looking for a monitoring solution to help you get started with GC tuning?
+With Sematext you can track garbage collection counts, duration and sizes out of the box.
+ 
+No credit card required – Get started in seconds
+The second thing that we need to talk about is generations. Java garbage collectors are generational, which means that they work under certain principles:
+
+Young data will not survive long
+Data that is old will continue to persist in memory
+That’s why JVM heap memory is divided into generations:
+
+Young generation which is divided into two sections called Eden space and Survivor space
+Old generation, or Tenured space.
+JVM Heap Space
+
+A simplified promotion of objects between spaces and generations can be illustrated with the following example. When an object is created it is first put into the young generation space into the Eden space. Once the young garbage collection happens the object is promoted into the Survivor space 0 and next into the Survivor space 1. If the object is still used at this point the next garbage collection cycle will move it to the Tenured space which means that it is moved to the old generation. You can imagine it as follows:
+
+JVM GC Data Move
+
+So the Eden space contains newly created objects and is empty at the beginning of the epoch. During the epoch, the Eden space will fill up eventually triggering a Minor GC event when filled up. The Survivor spaces contain objects that were used during at least a single epoch. Objects that survived through many epochs will be eventually promoted to the Tenured generation.
+
+Before Java 8 there was one additional memory space called the PermGen. PermGen or otherwise Permanent Generation was a special space on the heap separated from its other parts – the young and the tenured generation. It was used to store metadata such as classes and methods.
+
+Starting from Java 8, the Metaspace is the memory space that replaces the removed PermGen space. The implementation differs from the PermGen and this space of the heap is now automatically resized limiting the problems of going into out of memory in this region of the heap. The Metaspace memory can be garbage collected and the classes that are no longer used can be cleaned when the Metaspace reaches its maximum size.
+
+There are a few flags that can be used to control the size and the behavior of the Metaspace memory space:
+
+-XX:MetaspaceSize – initial size of the Metaspace memory region,
+-XX:MaxMetaspaceSize – maximum size of the Metaspace memory region,
+-XX:MinMetaspaceFreeRatio – minimum percentage of class metadata capacity that should be free after garbage collection,
+-XX:MaxMetaspaceFreeRatio – maximum percentage of class metadata capacity that should be free after garbage collection.
+You can now imagine why some garbage collectors may need a considerable amount of time to clear the old generation space. It’s done in a single step. The tenured generation is one big space of heap and to clear it the application threads have to be stopped.
+
+The Heap Structure of G1 Garbage Collector
+What we wrote above is true for all garbage collectors including serial, parallel and Concurrent Mark Sweep. We will discuss them a bit later. However, the G1 garbage collector goes a step further and divides the heap into something called regions. A region is a small, independent heap that can be dynamically set to be of Eden, Survivor or Tenured type:
+
+G1GC Regions
+
+In addition to the three mentioned types, we also have free memory, the white cells on the image.
+
+Such architecture allows for different operations. First of all, because the tenured generation is divided it can be collected in portions that affect latency, making the garbage collector faster for old generation space. Such heaps can be easily defragmented and dynamically resized. No cons, right? Well, that’s actually not true. The cost of maintaining such heap architecture is higher compared to the traditional heap architecture. It requires more CPU and memory.
+
+The region size when using the G1GC can be controlled. When the heap size is set to be lower than 4GB the region size will be automatically set to 1MB. For heaps between 4 and 8GB, the region size will be set to 2MB and so on, up to 32MB region size for heaps 64GB in size or larger. In general, the region size must be a power of two and be between 1 and 32MB. By default, the JVM will try to set up an optimal number of two thousand regions or more during the application start. We can control that by using the -XX:G1HeapRegionSize=N JVM parameter.
+
+The clearing of the heap in the case of G1GC is done by copying live data out of an existing region into an empty region and discarding the old region altogether. After that, the old region is considered free and objects can be allocated to it. Freeing multiple regions at the same time allows for defragmentation and assignment of humongous objects – ones that are larger than 50% of a heap region.
+
+You may now wonder what triggers garbage collection and that would be a great question. Common triggers for garbage collection are Eden space being full, not enough free space to allocate an object, external resources like System.gc(), tools like jmap or not enough free space to create an object.
+
+Interested in a solution that helps you keep an eye on memory usage?
+With Sematext, you get detailed visibility of heap sizes and utilization for individual memory pools to help spot performance issues faster.
+ 
+No credit card required – Get started in seconds
+What Triggers Java Garbage Collection
+To keep things even more complicated there are several types of garbage collection events. You can divide them in a very simplified way, as follows:
+
+Minor event – happen when the Eden space is full and moved data to Survivor space. So a Minor event happens within the young generation
+Mixed event – a Minor event plus reclaim of the Tenured generation
+Full GC event – a young and old generation space clearing together
+Even by looking at the names of the events you can see that the key in most cases will be lowering the pause times of the Mixed and Full GC events. Let’s stop discussing the garbage collection events for now. There is more to it and we could get deeper and deeper. But for now, we should be good.
+
+The next thing that I would like to mention is the humongous object. Remember? Those are the ones that are larger than a single region in our heap when dealing with the G1 garbage collector (G1GC). Actually, any object larger than 50% of the region size is considered humongous. Those objects are not allocated in the young generation space, but instead, they are put directly in the Tenured generation. Such objects can increase the pause time of the garbage collector and can increase the risk of triggering the Full GC because of running out of continued free space.
+
+Java Garbage Collectors Types
+We now understand the basics and it’s time to understand what kind of garbage collectors we have available and how each of them works in our application. Keep in mind that different Java versions will have different garbage collectors available. For example, Java 9 will have both Concurrent Mark Sweep and G1 garbage collectors, while the older updates of Java 7 will not have the G1 garbage collector available.
+
+That said, there are five types of garbage collectors in Java:
+
+Serial Garbage Collector
+The Serial garbage collector is designed to be used for single-threaded environments. Before doing garbage collection this garbage collector freezes all the application threads. Because of that, it is not suited for multi-threaded environments, like server-side applications. However, it is perfectly suited for single-threaded applications that don’t require low pause time. For example batch jobs.
+
+The documentation on Java garbage collectors also mentions that this garbage collector may be useful on multiprocessor machines for applications with a data set up to approximately 100MB.
+
+Parallel Garbage Collector
+The Parallel garbage collector, also known as throughput collector is very similar to the Serial garbage collector. It also needs to freeze the application threads when doing garbage collection. But, it was designed to work on multiprocessor environments and in multi-threaded applications with medium and large-sized data. The idea is that using multiple threads will speed up garbage collection making it faster for such use cases.
+
+If your application’s priority is peak performance and the thread pause time of one second or even longer is not a problem for it then the Parallel garbage collector may be a good idea. It will run from time to time freezing application threads and performing GC using multiple threads speeding it up compared to the Serial garbage collector.
+
+Concurrent Mark Sweep Garbage Collector
+The Concurrent Mark Sweep (CMS) garbage collector is one of the implementations that are called mostly concurrent. They perform expensive operations using multiple threads. They also share the threads used for garbage collection with the application. The overhead for this type of garbage collection comes not only from the fact that they do the collection concurrently, but also that the concurrent collection must be enabled.
+
+The CMS GC is designed for applications that prefer short pauses. Basically, it performs slower compared to Parallel or Serial garbage collector but doesn’t have to stop the application threads to perform garbage collection.
+
+This garbage collector should be chosen if your application prefers short pauses and can afford to share the application threads with the garbage collector. Keep in mind though that the Concurrent Mark Sweep garbage collector is doing to be removed in Java 14 and you should look at the G1 garbage collector if you are not using it yet.
+
+G1 Garbage Collector
+The G1 garbage collector is the garbage collection algorithm that was introduced with the 4th update of the 7th version of Java and improved since. G1GC was designed to be low latency, but that comes at a price – more frequent work which means more CPU cycles spent in garbage collection. It partitions the heap into smaller regions allowing for easier garbage collection and evacuation style memory clearing. It means that the objects are moved out of the cleared region and copied to another region. Most of the garbage collection is done in the young generation where it’s most efficient to do so.
+
+As the documentation states, the G1GC was designed for server-style applications running in a multiprocessor environment with a large amount of memory available. It tries to meet garbage collector pause goals with high probability. While doing that it also tries to achieve high throughput. All of that without the needs of complicated configuration, at least in theory.
+
+Think about it this way – if you have services that are latency-sensitive G1 garbage collector may be a very good choice. Having low latencies means that those services will not suffer from long stop-the-world events. Of course at the cost of higher CPU usage. Also, the G1 garbage collector was designed to work with larger heap sizes – if you have heap larger than 32GB G1 is usually a good choice. The G1 garbage collector is a replacement for the CMS garbage collector and it’s also the default garbage collector in the most recent Java versions.
+
+Z Garbage Collector
+The Z garbage collector is an experimental garbage collection implementation still not available on all platforms, like Windows and macOS. It is designed to be a very scalable low latency implementation. It performs expensive garbage collection work concurrently without the need for stopping the application threads.
+
+The ZGC is expected to work well with applications requiring pauses of 10ms or less and ones that use very large heaps.
+
+Java Garbage Collection Benefits
+There are multiple benefits of garbage collection in Java. However, the major one, that you may not think about in the first place is the simplified code. We don’t have to worry about proper memory assignment and release cycles. In our code, we just stop using an object and the memory it is using will be automatically reclaimed at some point. This is yet another added value from a simplicity point of view. The memory reclaim process is automatic and is the job of the internal algorithm inside the JVM. We just control what kind of algorithm we want to use – if we want to control it. Of course, we can still hit memory leaks if we keep the references to the objects forever, but this is a different pair of shoes.
+
+We have to remember though that those benefits come at a price – performance. Depending on the situation and the garbage collection algorithm, we can pay for the ease and automation of the memory management in the CPU cycles spent on the garbage collection. In extreme cases, when we have issues with memory or garbage collection, we can even experience stop of the whole application until the space reclamation process ends.
+
+Java Garbage Collection Best Practices
+We will cover the process of tuning garbage collection in the next post in the series, but before that, we wanted to share some good and bad practices around garbage collection. First of all – you should avoid calling the System.gc() method to ask for explicit garbage collection. As we’ve mentioned it is considered a bad practice and should be avoided.
+
+The second thing I wanted to mention is the right amount of heap memory. If you don’t have enough memory for your application to work you will experience slowdowns, long garbage collection, stop the world events and eventually out of memory errors. All of that can indicate that your heap is too small, but can also mean that you have a memory leak in your application. Look at the JVM monitoring of your choice to see if the heap usage grows indefinitely – if it is, it may mean you have a bug in your application code. We will talk more about the heap size in the next post in the series.
+
+Finally, if you are running a small, standalone application, you will probably not need any kind of garbage collection tuning. Just go with the defaults and you should be more than fine.
+
+The next step after that would be to choose the right garbage collector implementation. The one that matches the needs and requirements of our business. How to do that and what are the options to tune different garbage collection algorithms – this is something that we will cover in the next blog post – the one called A Step-by-Step Guide to Java Garbage Collection Tuning.
+
+Want a solution to help you track critical GC metrics?
+With Sematext you get full visibility into all garbage collection types to help you tune it for optimal performance.
+ 
+No credit card required – Get started in seconds
+Conclusion
+At this point, we know how the Java garbage collection process looks like, how each garbage collector works and what behavior we can expect from each of them. In addition to that, in the previous blog post we also discussed how to turn on and understand the logs produced by each garbage collector. This means that we are ready for the final part of the series – tuning our garbage collector.

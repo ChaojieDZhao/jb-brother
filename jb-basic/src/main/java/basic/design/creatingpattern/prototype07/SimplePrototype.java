@@ -1,0 +1,46 @@
+package basic.design.creatingpattern.prototype07;
+
+//抽象原型
+interface Prototype
+{
+	Object cloneSelf();//克隆自身的方法
+}
+
+//具体原型
+public class SimplePrototype implements Prototype, Cloneable
+{
+	int value;
+
+	//使用
+	public static void main(String args[])
+	{
+		SimplePrototype simplePrototype = new SimplePrototype();
+		simplePrototype.value = 500;
+		SimplePrototype simplePrototypeClone = (SimplePrototype)simplePrototype.cloneSelf();
+		System.out.println(simplePrototypeClone.value);
+	}
+
+	@Override
+	public Object cloneSelf()
+	{
+		SimplePrototype self = new SimplePrototype();
+		self.value = value;
+		return self;
+	}
+}
+
+//客户端使用
+class Client
+{
+	SimplePrototype prototype;
+
+	public Client(SimplePrototype prototype)
+	{
+		this.prototype = prototype;
+	}
+
+	public Object getPrototype()
+	{
+		return prototype.cloneSelf();
+	}
+}
